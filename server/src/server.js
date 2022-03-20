@@ -1,22 +1,16 @@
 const http = require('http');
 const app = require('./app');
-const { Sequelize } = require('sequelize');
+const db = require(`${__dirname}/../models`);
 
 const { loadPlanetsData } = require('./models/planets.model');
 
 const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
-const sequelize = new Sequelize('countries', 'root', '123', {
-  host: 'localhost',
-  dialect: 'mysql',
-});
-
-const User = require(`${__dirname}/../models/user`)(sequelize)
 
 async function startServer() {
   try {
     await loadPlanetsData();
-    await sequelize.sync();
+    await db.sequelize.sync();
 
     server.listen(PORT, () => {
       console.log(`Listening on port ${PORT}...`);
@@ -27,5 +21,3 @@ async function startServer() {
 }
 
 startServer();
-
-

@@ -1,7 +1,7 @@
-const {Sequelize } = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 module.exports = (sequelize) => {
-  const User = sequelize.define("User", {
+  return sequelize.define("User", {
     firstName: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -17,8 +17,6 @@ module.exports = (sequelize) => {
       },
     },
   });
-
-  return User;
 }
 
 
