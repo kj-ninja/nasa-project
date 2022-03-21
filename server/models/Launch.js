@@ -1,7 +1,9 @@
 const {Sequelize} = require('sequelize');
 
 module.exports = (sequelize) => {
-  return sequelize.define("Launch", {
+  const Planet = require(`${__dirname}/Planet.js`)(sequelize);
+
+  const Launch = sequelize.define("Launch", {
     flightNumber: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -39,4 +41,9 @@ module.exports = (sequelize) => {
       defaultValue: true,
     }
   });
-}
+
+  Launch.belongsTo(Planet);
+  Planet.hasMany(Launch);
+
+  return Launch;
+};
