@@ -1,11 +1,12 @@
 const http = require('http');
 const app = require('./app');
 const db = require(`${__dirname}/models`);
-
 const { loadPlanetsData } = require('./services/planet.service');
 
 const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
+
+// TODO: update project diagram in lucid chart
 
 async function startServer() {
   try {
