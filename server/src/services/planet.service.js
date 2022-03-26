@@ -1,14 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse');
+const db = require(`${__dirname}/../models`);
 
-const habitablePlanets = [];
+const Planet = db.planets;
 
 const isPlanetHabitable = (planet) => {
   return planet['koi_disposition'] === 'CONFIRMED'
     && planet['koi_insol'] > 0.36 && planet['koi_insol'] < 1.11
     && planet['koi_prad'] < 1.6;
 };
+
+async function savePlanet(planet) {
+  try {
+    await Planet.findOrCreate({
+      where: {keplerName: planet.kepler_name}
+    });
+  } catch (error) {
+    console.error(`Could not save a planet ${error}`)
+  }
+}
 
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
@@ -19,25 +30,20 @@ function loadPlanetsData() {
       }))
       .on('data', (data) => {
         if (isPlanetHabitable(data)) {
-          habitablePlanets.push(data);
+          savePlanet(data);
         }
       })
       .on('error', (error) => {
         console.log(error);
         reject(error);
       })
-      .on('end', () => {
-        console.log(`${habitablePlanets.length} habitable planets found!`);
+      .on('end', async () => {
+        console.log(`There are ${await Planet.count()} habitable planets!`);
         resolve();
       });
   });
 }
 
-function getAllPlanets() {
-  return habitablePlanets;
-}
-
 module.exports = {
   loadPlanetsData,
-  getAllPlanets,
 };

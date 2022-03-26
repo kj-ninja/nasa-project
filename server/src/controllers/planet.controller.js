@@ -1,7 +1,17 @@
-const { getAllPlanets } = require('../services/planet.service');
+const db = require(`${__dirname}/../models`);
+const Planet = db.planets;
 
-function httpGetAllPlanets(req, res) {
-  return res.status(200).json(getAllPlanets());
+async function httpGetAllPlanets(req, res) {
+  Planet.findAll()
+    .then(data => {
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving planets."
+      });
+    });
 }
 
 module.exports = {
