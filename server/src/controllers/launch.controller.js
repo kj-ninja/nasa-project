@@ -1,4 +1,4 @@
-const { getAllLaunches, addNewLaunch, existsLaunchWidthId, abortLaunchById } = require('../../models/launches.model');
+const { getAllLaunches, addNewLaunch, existsLaunchWidthId, abortLaunchById } = require('../services/launch.service');
 
 function httpGetAllLaunches(req, res) {
     return res.status(200).json(getAllLaunches());
