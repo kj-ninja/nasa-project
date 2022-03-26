@@ -34,4 +34,30 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.launches = require(`${__dirname}/launch.model.js`)(sequelize, Sequelize);
+db.planets = require(`${__dirname}/planet.model.js`)(sequelize, Sequelize);
+
+db.planets.hasMany(db.launches, {
+  foreignKey: 'target'
+});
+db.launches.belongsTo(db.planets, {
+  foreignKey: 'target'
+});
+
+// exports.createLaunch = (launch) => {
+//   return Launch.create({
+//     title: launch.title,
+//     description: launch.description,
+//   })
+//     .then((launch) => {
+//       console.log(">> Created tutorial: " + JSON.stringify(launch, null, 4));
+//       return launch;
+//     })
+//     .catch((err) => {
+//       console.log(">> Error while creating tutorial: ", err);
+//     });
+// };
+//
+// const launch = new Launch();
+
 module.exports = db;
