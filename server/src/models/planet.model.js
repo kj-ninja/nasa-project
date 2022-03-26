@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
   return sequelize.define("Planet", {
-    name: {
+    keplerName: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {
