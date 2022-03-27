@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       defaultValue: 0,
     },
-    target: {
+    planetId: {
       type: Sequelize.INTEGER,
       allowNull: false,
       validate: {

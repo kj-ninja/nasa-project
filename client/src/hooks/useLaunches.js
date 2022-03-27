@@ -26,12 +26,12 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
     const launchDate = new Date(data.get("launch-day"));
     const mission = data.get("mission-name");
     const rocket = data.get("rocket-name");
-    const target = Number(data.get("planets-selector"));
+    const planetId = Number(data.get("planets-selector"));
     const response = await httpSubmitLaunch({
       launchDate,
       mission,
       rocket,
-      target,
+      planetId,
     });
 
     const success = response.ok;
