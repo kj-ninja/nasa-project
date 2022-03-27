@@ -27,8 +27,8 @@ describe('Test Post /launch', () => {
   const launchDataWithInvalidDate = {
     mission: 'USS Enterprise',
     rocket: 'NCC 1701-D',
-    planetId: 'Mars',
-    launchDate: 'Dupa',
+    target: 'Mars',
+    launchDate: 'Not date',
   };
 
   test('It should respond with 201 success', async () => {

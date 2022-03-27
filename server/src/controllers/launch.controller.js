@@ -1,5 +1,5 @@
 const db = require(`${__dirname}/../models`);
-const {findMaxFlightNumber} = require('../services/launch.service');
+const {findMaxFlightNumber, deleteLaunch} = require('../services/launch.service');
 
 const Launch = db.launches;
 
@@ -51,18 +51,6 @@ async function httpAddNewLaunch(req, res) {
   }
 }
 
-async function deleteLaunch(launchId) {
-  try {
-    await Launch.update({deleted: 1}, {
-      where: {
-        id: launchId
-      }
-    });
-  } catch (error) {
-    console.log(`Could not update launch ${error}`);
-  }
-}
-
 async function httpAbortLaunch(req, res) {
   const launchId = Number(req.params.id);
   let launch;
@@ -76,7 +64,6 @@ async function httpAbortLaunch(req, res) {
       })
     }
 
-    // tu mi sie nie podoba jak zwracam ten id czy ten launch?
     deleteLaunch(launchId);
     return res.status(200).json(launchId);
   } catch (error) {

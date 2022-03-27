@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 
 // TODO: update project diagram in lucid chart
+// TODO: add mysql tests
 
 async function startServer() {
   try {

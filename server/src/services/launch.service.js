@@ -2,18 +2,6 @@ const db = require(`${__dirname}/../models`);
 
 const Launch = db.launches;
 
-// function existsLaunchWidthId(launchId) {
-//   return launches.has(launchId);
-// }
-//
-// function abortLaunchById(launchId) {
-//   const abortedLaunch = launches.get(launchId);
-//   abortedLaunch.upcoming = false;
-//   abortedLaunch.success = false;
-//
-//   return abortedLaunch;
-// }
-
 async function findMaxFlightNumber() {
   try {
     return await Launch.max('flightNumber');
@@ -22,8 +10,19 @@ async function findMaxFlightNumber() {
   }
 }
 
+async function deleteLaunch(launchId) {
+  try {
+    await Launch.update({deleted: 1}, {
+      where: {
+        id: launchId
+      }
+    });
+  } catch (error) {
+    console.log(`Could not update launch ${error}`);
+  }
+}
+
 module.exports = {
-  // existsLaunchWidthId,
-  // abortLaunchById,
   findMaxFlightNumber,
+  deleteLaunch
 };
