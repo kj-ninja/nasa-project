@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define("Planet", {
+  return sequelize.define('Planet', {
     keplerName: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -7,5 +7,9 @@ module.exports = (sequelize, Sequelize) => {
         notEmpty: true
       },
     },
+  },
+  {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
   });
 };

@@ -21,6 +21,14 @@ async function savePlanet(planet) {
   }
 }
 
+async function findPlanetById(id) {
+  try {
+    return await Planet.findByPk(id);
+  } catch (error) {
+    console.error(`Could not find a planet ${error}`)
+  }
+}
+
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
     fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
@@ -46,4 +54,5 @@ function loadPlanetsData() {
 
 module.exports = {
   loadPlanetsData,
+  findPlanetById,
 };
