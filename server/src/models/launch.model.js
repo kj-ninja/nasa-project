@@ -1,7 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define("Launch", {
+  return sequelize.define('Launch', {
     flightNumber: {
       type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      },
+      defaultValue: 0,
+    },
+    target: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      },
+    },
+    mission: {
+      type: Sequelize.STRING,
       allowNull: false,
       validate: {
         notEmpty: true
@@ -36,5 +51,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       defaultValue: true,
     }
+  },
+  {
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
   });
 };
