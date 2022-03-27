@@ -14,20 +14,20 @@ describe('Test Post /launch', () => {
   const completeLaunchData = {
     mission: 'USS Enterprise',
     rocket: 'NCC 1701-D',
-    target: 'Mars',
+    planetId: 'Mars',
     launchDate: 'January 4, 2028',
   };
 
   const launchDataWithoutDate = {
     mission: 'USS Enterprise',
     rocket: 'NCC 1701-D',
-    target: 'Mars',
+    planetId: 'Mars',
   }
 
   const launchDataWithInvalidDate = {
     mission: 'USS Enterprise',
     rocket: 'NCC 1701-D',
-    target: 'Mars',
+    planetId: 'Mars',
     launchDate: 'Dupa',
   };
 
