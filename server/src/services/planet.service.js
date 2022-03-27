@@ -17,7 +17,7 @@ async function savePlanet(planet) {
       where: {keplerName: planet.kepler_name}
     });
   } catch (error) {
-    console.error(`Could not save a planet ${error}`)
+    console.log(`Could not make a request to db ${error}`)
   }
 }
 

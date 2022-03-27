@@ -1,11 +1,13 @@
 const db = require(`${__dirname}/../models`);
-const { findMaxFlightNumber } = require('../services/launch.service');
+const {findMaxFlightNumber} = require('../services/launch.service');
 
 const Launch = db.launches;
 
 async function httpGetAllLaunches(req, res) {
   try {
-    const response = await Launch.findAll();
+    const response = await Launch.findAll({
+      where: { deleted: 0 }
+    });
     res.status(200).send(response);
   } catch (error) {
     res.status(500).send({
@@ -49,17 +51,37 @@ async function httpAddNewLaunch(req, res) {
   }
 }
 
-function httpAbortLaunch(req, res) {
-  const launchId = Number(req.params.id);
+async function deleteLaunch(launchId) {
+  try {
+    await Launch.update({deleted: 1}, {
+      where: {
+        id: launchId
+      }
+    });
+  } catch (error) {
+    console.log(`Could not update launch ${error}`);
+  }
+}
 
-  // if (!existsLaunchWidthId(launchId)) {
-  //   return res.status(404).json({
-  //     error: 'Launch not found',
-  //   })
-  // }
-  //
-  // const abortedLaunch = abortLaunchById(launchId);
-  // return res.status(200).json(abortedLaunch);
+async function httpAbortLaunch(req, res) {
+  const launchId = Number(req.params.id);
+  let launch;
+
+  try {
+    launch = await Launch.findOne({where: {id: launchId}});
+
+    if (!launch) {
+      return res.status(404).json({
+        error: 'Launch not found',
+      })
+    }
+
+    // tu mi sie nie podoba jak zwracam ten id czy ten launch?
+    deleteLaunch(launchId);
+    return res.status(200).json(launchId);
+  } catch (error) {
+    console.log(`Could not make a request to db ${error}`);
+  }
 }
 
 module.exports = {

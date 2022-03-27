@@ -50,7 +50,15 @@ module.exports = (sequelize, Sequelize) => {
         notEmpty: true
       },
       defaultValue: true,
-    }
+    },
+    deleted: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      },
+      defaultValue: false,
+    },
   },
   {
     charset: 'utf8',
