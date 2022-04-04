@@ -5,6 +5,7 @@ interface Launch {
   mission: string;
   rocket: string;
   target: string;
+  id?: number;
 }
 
 const httpSubmitLaunch = async (launch: Launch) => {

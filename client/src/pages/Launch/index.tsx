@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {ContentWindow} from "./styles";
 import useLaunches from "../../hooks/useLaunches";
 
@@ -7,26 +7,40 @@ interface Launch {
   mission: string;
   rocket: string;
   target: string;
+  id: number;
 }
 
-const Launch: React.FC = () => {
+const Launch: FC = () => {
   const { submitLaunch } = useLaunches();
   const today = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState(today);
+  const [flightNumber, setFlightNumber] = useState(0);
   const [missionValue, setMissionValue] = useState("");
   const [rocketName, setRocketName] = useState("");
   const [target, setTarget] = useState("Kepler 1");
 
+  useEffect(() => {
+    const flightNumberInLocalStorage = localStorage.getItem('flightNumber');
+    if(!!flightNumberInLocalStorage) {
+      setFlightNumber(JSON.parse(flightNumberInLocalStorage))
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('flightNumber', JSON.stringify(flightNumber));
+  }, [flightNumber]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (missionValue && rocketName) {
-      console.log(date)
       const launch: Launch = {
         launchDate: date,
         mission: missionValue,
         rocket: rocketName,
-        target: target
+        target: target,
+        id: flightNumber + 1
       }
+      setFlightNumber(flightNumber + 1);
       submitLaunch(launch);
       setDate(today);
       setMissionValue("");

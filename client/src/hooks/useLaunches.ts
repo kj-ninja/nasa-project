@@ -1,16 +1,35 @@
+import {useEffect, useState} from "react";
+
 interface Launch {
   launchDate: string;
   mission: string;
   rocket: string;
   target: string;
+  id: number
 }
 
 const useLaunches = () => {
+  const [launches, setLaunches] = useState<Launch[]>([]);
+
+  useEffect(() => {
+     setLaunches(JSON.parse(localStorage.getItem('Launches') || "{}"))
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('Launches', JSON.stringify(launches));
+  }, [launches]);
+
   const submitLaunch = (launch: Launch) => {
-    console.log(launch)
+    setLaunches([...launches, launch])
   }
 
-  return {submitLaunch}
+  const deleteLaunch = (launch: Launch, flightNumber: number) => {
+    if (launches.length > 0) {
+      return setLaunches(launches.filter(element => element.id !== flightNumber))
+    }
+  }
+
+  return { submitLaunch, deleteLaunch }
 }
 
 export default useLaunches;
