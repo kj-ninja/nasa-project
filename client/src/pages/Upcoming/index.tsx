@@ -1,6 +1,6 @@
 import {ContentWindow, MissionTable, Thead} from "./styles";
-import React, {Key, useCallback, useEffect, useMemo, useState} from "react";
-import useLaunches from "../../hooks/useLaunches";
+import {Key, useEffect, useState} from "react";
+
 
 interface Launch {
   launchDate: string;
@@ -11,27 +11,28 @@ interface Launch {
 }
 
 const Upcoming = () => {
-  const { deleteLaunch } = useLaunches();
   const [launches, setLaunches] = useState(JSON.parse(localStorage.getItem('Launches') || '{}'));
 
   useEffect(() => {
-    setLaunches(JSON.parse(localStorage.getItem('Launches') || "{}"))
-  }, []);
+    if (!launches) {
+      setLaunches(JSON.parse(localStorage.getItem('Launches') || "{}"))
+    }
+  }, [launches]);
 
-  // React.useEffect(() => {
-  //   localStorage.setItem('Launches', JSON.stringify(launches));
-  // }, [launches]);
+  useEffect(() => {
+    localStorage.setItem('Launches', JSON.stringify(launches));
+  }, [launches]);
 
-  const handleDelete = useCallback((launch: Launch, flightNumber: number) => {
-    deleteLaunch(launch, flightNumber)
-  }, [deleteLaunch])
+  const handleDelete = (launch: Launch) => {
+        return setLaunches(launches.filter((element: Launch) => element.id !== launch.id))
+  }
 
-  const tableBody = useMemo(() => {
+  const tableBody = () => {
     return launches?.filter((launch: Launch) => launch).map((launch: Launch, index: Key) => {
       return (
         <tr key={index}>
           <td>
-            <button onClick={() => {handleDelete(launch, launch.id)}}>X</button>
+            <button onClick={() => {handleDelete(launch)}}>X</button>
           </td>
           <td>{launch.id}</td>
           <td>{launch.launchDate}</td>
@@ -41,7 +42,7 @@ const Upcoming = () => {
         </tr>
       )
     })
-  }, [launches, handleDelete]);
+  };
 
   return (
     <ContentWindow>
@@ -63,7 +64,7 @@ const Upcoming = () => {
             </tr>
           </Thead>
           <tbody>
-          {launches && tableBody}
+          {launches && tableBody()}
           </tbody>
         </MissionTable>
     </ContentWindow>

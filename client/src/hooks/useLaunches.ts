@@ -23,13 +23,13 @@ const useLaunches = () => {
     setLaunches([...launches, launch])
   }
 
-  const deleteLaunch = (launch: Launch, flightNumber: number) => {
-    if (launches.length > 0) {
-      return setLaunches(launches.filter(element => element.id !== flightNumber))
-    }
-  }
+  // const deleteLaunch = ({id}: {id: number}) => {
+  //   if (launches.length > 0) {
+  //     return setLaunches(launches.filter(element => element.id !== id))
+  //   }
+  // }
 
-  return { submitLaunch, deleteLaunch }
+  return { submitLaunch }
 }
 
 export default useLaunches;
