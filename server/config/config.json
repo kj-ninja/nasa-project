@@ -2,21 +2,21 @@
   "development": {
     "username": "admin",
     "password": "rafalek3007",
-    "database": "kjninja",
+    "database": "rds-mysql-kjninja",
     "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
     "username": "admin",
     "password": "rafalek3007",
-    "database": "kjninja",
+    "database": "rds-mysql-kjninja",
     "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
     "username": "admin",
     "password": "rafalek3007",
-    "database": "kjninja",
+    "database": "rds-mysql-kjninja",
     "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
