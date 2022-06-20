@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "root",
-    "password": "123",
-    "database": "nasa",
-    "host": "localhost",
+    "username": "admin",
+    "password": "rafalek3007",
+    "database": "kjninja",
+    "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "rafalek3007",
+    "database": "kjninja",
+    "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "admin",
+    "password": "rafalek3007",
+    "database": "kjninja",
+    "host": "rds-mysql-kjninja.cwj15dtfpjfy.eu-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
