@@ -90,6 +90,7 @@ const AppLayout = props => {
                 <Route exact path="/upcoming">
                   <Upcoming
                     entered={anim.entered}
+                    planets={planets}
                     launches={launches}
                     abortLaunch={abortLaunch}/>
                 </Route>
