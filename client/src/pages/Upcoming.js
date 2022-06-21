@@ -23,7 +23,13 @@ const Upcoming = props => {
     launches,
     classes,
     abortLaunch,
+    planets,
   } = props;
+
+  const getPlanetNameById = (planets, planetId) => {
+    const planet = planets.find(planet => planet.id === planetId);
+    return planet.keplerName;
+  }
 
   const tableBody = useMemo(() => {
     return launches?.filter((launch) => launch.upcoming)
@@ -42,7 +48,7 @@ const Upcoming = props => {
             <td>{new Date(launch.launchDate).toDateString()}</td>
             <td>{launch.mission}</td>
             <td>{launch.rocket}</td>
-            <td>{launch.planetId}</td>
+            <td>{getPlanetNameById(planets, launch.id)}</td>
           </tr>
         );
       });
