@@ -1,5 +1,5 @@
 const db = require(`${__dirname}/../models`);
-const {findMaxFlightNumber, deleteLaunch} = require('../services/launch.service');
+const {deleteLaunch, scheduleNewLaunch} = require('../models/launches/launches.model');
 
 const Launch = db.launches;
 
@@ -12,7 +12,7 @@ async function httpGetAllLaunches(req, res) {
   } catch (error) {
     res.status(500).send({
       message:
-        error.message || "Some error occurred while retrieving planets."
+        error.message || "Some error occurred while retrieving launches."
     });
   }
 }
@@ -33,22 +33,8 @@ async function httpAddNewLaunch(req, res) {
     });
   }
 
-  const maxFlightNumber = await findMaxFlightNumber();
-  const newLaunch = Object.assign(launch, {
-    upcoming: true,
-    success: true,
-    flightNumber: maxFlightNumber + 1,
-  });
-
-  try {
-    await Launch.create(newLaunch);
-    return res.status(201).json(newLaunch);
-  } catch (error) {
-    res.status(500).send({
-      message:
-        error.message || 'Some error occurred while creating new launch.'
-    });
-  }
+  await scheduleNewLaunch(launch);
+  return res.status(201).json(launch);
 }
 
 async function httpAbortLaunch(req, res) {
@@ -64,8 +50,10 @@ async function httpAbortLaunch(req, res) {
       })
     }
 
-    deleteLaunch(launchId);
-    return res.status(200).json(launchId);
+    await deleteLaunch(launchId);
+    return res.status(200).json({
+      ok: true,
+    });
   } catch (error) {
     console.log(`Could not make a request to db ${error}`);
   }
