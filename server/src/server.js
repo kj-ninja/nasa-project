@@ -3,7 +3,8 @@ require('dotenv').config();
 
 const app = require('./app');
 const db = require(`${__dirname}/models`);
-const { loadPlanetsData } = require('./services/planet.service');
+const { loadPlanetsData } = require('./models/planets/planets.model');
+const { loadLaunchesData } = require('./models/launches/launches.model');
 
 const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
@@ -15,6 +16,7 @@ async function startServer() {
   try {
     await db.sequelize.sync();
     await loadPlanetsData();
+    await loadLaunchesData();
 
     server.listen(PORT, () => {
       console.log(`Listening on port ${PORT}...`);

@@ -29,8 +29,8 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.launches = require(`${__dirname}/launch.model.js`)(sequelize, Sequelize);
-db.planets = require(`${__dirname}/planet.model.js`)(sequelize, Sequelize);
+db.launches = require(`${__dirname}/launches/launches.sequelize.js`)(sequelize, Sequelize);
+db.planets = require(`${__dirname}/planets/planets.sequelize.js`)(sequelize, Sequelize);
 
 db.planets.hasMany(db.launches, {
   foreignKey: 'planetId'

@@ -10,10 +10,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     planetId: {
       type: Sequelize.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      },
+      allowNull: true,
     },
     mission: {
       type: Sequelize.STRING,
@@ -38,14 +35,14 @@ module.exports = (sequelize, Sequelize) => {
     },
     upcoming: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: true
       },
     },
     success: {
       type: Sequelize.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       validate: {
         notEmpty: true
       },

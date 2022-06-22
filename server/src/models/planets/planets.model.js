@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse');
-const db = require(`${__dirname}/../models`);
 
+const db = require(`${__dirname}/..`);
 const Planet = db.planets;
 
 const isPlanetHabitable = (planet) => {
@@ -31,7 +31,7 @@ async function findPlanetById(id) {
 
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
-    fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
+    fs.createReadStream(path.join(__dirname, '..', '..', '..', 'data', 'kepler_data.csv'))
       .pipe(parse({
         comment: '#',
         columns: true,
