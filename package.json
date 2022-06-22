@@ -24,7 +24,5 @@
     "url": "https://github.com/kj-ninja/nasa-project/issues"
   },
   "homepage": "https://github.com/kj-ninja/nasa-project#readme",
-  "dependencies": {
-    "axios": "^0.27.2"
-  }
+  "dependencies": {}
 }
