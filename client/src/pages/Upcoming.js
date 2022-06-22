@@ -38,7 +38,7 @@ const Upcoming = props => {
           <tr key={String(launch.flightNumber)}>
             <td>
               <Clickable style={{color: "red"}}>
-                <Link className={classes.link} onClick={() => abortLaunch(launch.flightNumber)}>
+                <Link className={classes.link} onClick={() => abortLaunch(launch.id)}>
                   ✖
                 </Link>
               </Clickable>
@@ -48,17 +48,16 @@ const Upcoming = props => {
             <td>{new Date(launch.launchDate).toDateString()}</td>
             <td>{launch.mission}</td>
             <td>{launch.rocket}</td>
-            <td>{getPlanetNameById(planets, launch.id) || 'Unknown'}</td>
+            <td>{getPlanetNameById(planets, launch.planetId) || 'Unknown'}</td>
           </tr>
         );
       });
-  }, [launches, abortLaunch, classes.link]);
+  }, [launches, abortLaunch, classes.link, planets]);
 
   return (
     <Appear id="upcoming" animate show={entered}>
       <Paragraph>
-        Upcoming missions including both SpaceX launches and newly scheduled Zero to Mastery
-        rockets.
+        Upcoming missions including both SpaceX launches and newly scheduled rockets.
       </Paragraph>
 
       <Words animate>

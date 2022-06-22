@@ -11,10 +11,17 @@ async function getSpaceXLaunches() {
           select: {
             name: 1
           }
+        },
+        {
+          path: 'payloads',
+          select: {
+            'customers': 1
+          }
         }
       ]
     }
   });
+
   return response.data.docs;
 }
 
