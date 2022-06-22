@@ -40,6 +40,16 @@ module.exports = (sequelize, Sequelize) => {
         notEmpty: true
       },
     },
+    customers: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      get() {
+        return this.getDataValue('customers').split(';')
+      },
+      set(val) {
+        this.setDataValue('customers', val.join(';'));
+      },
+    },
     success: {
       type: Sequelize.BOOLEAN,
       allowNull: true,

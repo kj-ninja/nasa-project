@@ -50,6 +50,7 @@ async function scheduleNewLaunch(launch) {
     upcoming: true,
     success: true,
     flightNumber: maxFlightNumber + 1,
+    customers: ['WSH', 'NASA'],
   });
 
   try {
@@ -65,6 +66,11 @@ async function populateLaunches() {
     const spaceXLaunches = await getSpaceXLaunches();
 
     for (const spaceXLaunch of spaceXLaunches) {
+      const payloads = spaceXLaunch['payloads'];
+      const customers = payloads.flatMap((payload) => {
+        return payload['customers'];
+      });
+
       const launch = {
         flightNumber: spaceXLaunch['flight_number'],
         mission: spaceXLaunch['name'],
@@ -73,6 +79,7 @@ async function populateLaunches() {
         upcoming: spaceXLaunch['upcoming'],
         success: spaceXLaunch['success'],
         deleted: 0,
+        customers,
       };
 
       await saveLaunch(launch);
