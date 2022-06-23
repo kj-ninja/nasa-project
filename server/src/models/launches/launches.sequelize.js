@@ -44,10 +44,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: true,
       get() {
-        return this.getDataValue('customers').split(';')
+        return this.getDataValue('customers')?.split(';')
       },
       set(val) {
-        this.setDataValue('customers', val.join(';'));
+        this.setDataValue('customers', val?.join(';'));
       },
     },
     success: {
