@@ -1,18 +1,21 @@
-const db = require(`${__dirname}/../models`);
-const {deleteLaunch, scheduleNewLaunch} = require('../models/launches/launches.model');
-
-const Launch = db.launches;
+const {
+  deleteLaunch,
+  scheduleNewLaunch,
+  getAllLaunches,
+  findLaunch,
+} = require('../models/launches/launches.model');
+const {getPagination} = require("../services/query");
 
 async function httpGetAllLaunches(req, res) {
+  const {page, size} = await getPagination(req.query);
+
   try {
-    const response = await Launch.findAll({
-      where: { deleted: 0 }
-    });
+    const response = await getAllLaunches(page, size);
     res.status(200).send(response);
   } catch (error) {
     res.status(500).send({
       message:
-        error.message || "Some error occurred while retrieving launches."
+      error.message || "Some error occurred while retrieving launches."
     });
   }
 }
@@ -41,22 +44,20 @@ async function httpAbortLaunch(req, res) {
   const launchId = Number(req.params.id);
   let launch;
 
-  try {
-    launch = await Launch.findOne({where: {id: launchId}});
+  launch = await findLaunch({
+    id: launchId,
+  });
 
-    if (!launch) {
-      return res.status(404).json({
-        error: 'Launch not found',
-      })
-    }
-
-    await deleteLaunch(launchId);
-    return res.status(200).json({
-      ok: true,
+  if (!launch) {
+    return res.status(404).json({
+      error: 'Launch not found',
     });
-  } catch (error) {
-    console.log(`Could not make a request to db ${error}`);
   }
+
+  await deleteLaunch(launchId);
+  return res.status(200).json({
+    ok: true,
+  });
 }
 
 module.exports = {
