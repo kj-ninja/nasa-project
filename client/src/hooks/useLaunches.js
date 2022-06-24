@@ -4,6 +4,7 @@ import {
   httpGetLaunches,
   httpSubmitLaunch,
   httpAbortLaunch,
+  httpUpdateLaunchDestination,
 } from './requests';
 
 function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
@@ -58,11 +59,31 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
     }
   }, [getLaunches, onAbortSound, onFailureSound]);
 
+  const updateLaunchDestination = useCallback(async (payload) => {
+    const {destinationId} = payload;
+
+    if (!destinationId) {
+      onFailureSound();
+      return;
+    }
+
+    const response = await httpUpdateLaunchDestination(payload);
+    const success = response.data.ok;
+
+    if (success) {
+      onSuccessSound();
+      await getLaunches();
+    } else {
+      onFailureSound();
+    }
+  }, [getLaunches, onSuccessSound, onFailureSound]);
+
   return {
     launches,
     isPendingLaunch,
     submitLaunch,
     abortLaunch,
+    updateLaunchDestination,
   };
 }
 

@@ -3,6 +3,7 @@ const {
   scheduleNewLaunch,
   getAllLaunches,
   findLaunch,
+  updateLaunchDestination,
 } = require('../models/launches/launches.model');
 const {getPagination} = require("../services/query");
 
@@ -36,8 +37,15 @@ async function httpAddNewLaunch(req, res) {
     });
   }
 
-  await scheduleNewLaunch(launch);
-  return res.status(201).json(launch);
+  try {
+    await scheduleNewLaunch(launch);
+    return res.status(201).json(launch);
+  } catch (error) {
+    res.status(500).send({
+      message:
+      error.message || "Some error occurred while retrieving launches."
+    });
+  }
 }
 
 async function httpAbortLaunch(req, res) {
@@ -54,14 +62,40 @@ async function httpAbortLaunch(req, res) {
     });
   }
 
-  await deleteLaunch(launchId);
-  return res.status(200).json({
-    ok: true,
-  });
+  try {
+    await deleteLaunch(launchId);
+    return res.status(200).json({
+      ok: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message:
+      error.message || "Some error occurred while retrieving launches."
+    });
+  }
+}
+
+async function httpUpdateLaunchDestination(req, res) {
+  // TODO: make a generic function to update key-value
+  const launchId = Number(req.params.id);
+  const destinationId = req.body;
+
+  try {
+    await updateLaunchDestination(launchId, destinationId);
+    return res.status(200).json({
+      ok: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message:
+      error.message || "Some error occurred while retrieving launches."
+    });
+  }
 }
 
 module.exports = {
   httpGetAllLaunches,
   httpAddNewLaunch,
   httpAbortLaunch,
+  httpUpdateLaunchDestination,
 }

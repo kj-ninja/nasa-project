@@ -10,6 +10,9 @@ async function getAllLaunches(page, size) {
       where: {deleted: 0},
       limit: size,
       offset: page * size,
+      order: [
+        ['flightNumber', 'ASC'],
+      ]
     });
   } catch (error) {
     console.error(`Could not fetch launches from db ${error}`);
@@ -35,6 +38,18 @@ async function findMaxFlightNumber() {
 async function deleteLaunch(launchId) {
   try {
     await Launch.update({deleted: 1}, {
+      where: {
+        id: launchId
+      }
+    });
+  } catch (error) {
+    console.log(`Could not delete launch ${error}`);
+  }
+}
+
+async function updateLaunchDestination(launchId, {destinationId}) {
+  try {
+    await Launch.update({planetId: destinationId}, {
       where: {
         id: launchId
       }
@@ -130,4 +145,5 @@ module.exports = {
   scheduleNewLaunch,
   findLaunch,
   getNumberOfLaunches,
+  updateLaunchDestination,
 };
