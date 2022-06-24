@@ -1,5 +1,5 @@
 const {findPlanetById} = require('../planets/planets.model');
-const {getSpaceXLaunches} = require('../../services/spacex.service');
+const {getSpaceXLaunches} = require('../../services/spaceX.service');
 
 const db = require(`${__dirname}/..`);
 const Launch = db.launches;
