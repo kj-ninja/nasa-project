@@ -33,10 +33,10 @@ db.launches = require(`${__dirname}/launches/launches.sequelize.js`)(sequelize, 
 db.planets = require(`${__dirname}/planets/planets.sequelize.js`)(sequelize, Sequelize);
 
 db.planets.hasMany(db.launches, {
-  foreignKey: 'planetId'
+  foreignKey: 'planetId',
 });
 db.launches.belongsTo(db.planets, {
-  foreignKey: 'planetId'
+  foreignKey: 'planetId',
 });
 
 module.exports = db;

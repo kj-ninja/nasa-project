@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:8000/v1';
+import axios from "axios";
+const API_URL = 'v1';
 
 async function httpGetPlanets() {
   const response = await fetch(`${API_URL}/planets`);
@@ -9,7 +10,7 @@ async function httpGetLaunches() {
   const response = await fetch(`${API_URL}/launches`);
   const {rows: fetchedLaunches} = await response.json();
 
-  return fetchedLaunches.sort((a, b) => a.flightNumber - b.flightNumber);
+  return fetchedLaunches;
 }
 
 async function httpSubmitLaunch(launch) {
@@ -40,7 +41,21 @@ async function httpAbortLaunch(id) {
       ok: false,
     }
   }
+}
 
+async function httpUpdateLaunchDestination(payload) {
+  const {launchId, destinationId} = payload;
+
+  try {
+    return await axios.patch(`${API_URL}/launches/${launchId}`, {
+      destinationId: Number(destinationId),
+    });
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+    }
+  }
 }
 
 export {
@@ -48,4 +63,5 @@ export {
   httpGetLaunches,
   httpSubmitLaunch,
   httpAbortLaunch,
+  httpUpdateLaunchDestination
 };

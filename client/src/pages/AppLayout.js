@@ -10,6 +10,7 @@ import {
   withSounds,
   withStyles,
 } from "arwes";
+import {styles} from "../styles";
 
 import usePlanets from "../hooks/usePlanets";
 import useLaunches from "../hooks/useLaunches";
@@ -21,20 +22,6 @@ import Footer from "../components/Footer";
 import Launch from "./Launch";
 import History from "./History";
 import Upcoming from "./Upcoming";
-
-const styles = () => ({
-  content: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    margin: "auto",
-  },
-  centered: {
-    flex: 1,
-    paddingTop: "20px",
-    paddingBottom: "10px",
-  },
-});
 
 const AppLayout = props => {
   const {sounds, classes} = props;
@@ -56,6 +43,7 @@ const AppLayout = props => {
     isPendingLaunch,
     submitLaunch,
     abortLaunch,
+    updateLaunchDestination,
   } = useLaunches(onSuccessSound, onAbortSound, onFailureSound);
 
   const planets = usePlanets();
@@ -92,7 +80,8 @@ const AppLayout = props => {
                     entered={anim.entered}
                     planets={planets}
                     launches={launches}
-                    abortLaunch={abortLaunch}/>
+                    abortLaunch={abortLaunch}
+                    updateLaunchDestination={updateLaunchDestination}/>
                 </Route>
 
                 <Route exact path="/history">
